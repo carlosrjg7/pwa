@@ -9,12 +9,18 @@ const browserSync = require('browser-sync');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 
+
+
 const browserInit = () =>{
   browserSync.init({
     server: {
       baseDir: './public'
     },
-    port: 8080
+    port: 8080,
+    https: {
+      key: "./ssl/server.key",
+      cert: "./ssl/server.crt"
+  }
   });
 };
 
@@ -36,10 +42,15 @@ gulp.task('js', () => {
 });
 
 gulp.task('sass', () =>{
-    return gulp.src('./resourse/sass/**/*.scss')
-      .pipe(sass())
+    return gulp.src('./resourse/sass/global.scss')
+      .pipe(sass({
+        includePaths: ['./node_modules'],
+      }))
       .on('error', sass.logError)
       .pipe(cleanCSS({compatibility: 'ie8'}))
+      .pipe(rename({
+        suffix: '.min'
+      }))
       .pipe(gulp.dest('./public/css'))
       .pipe(browserSync.stream())
   });

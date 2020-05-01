@@ -1,12 +1,7 @@
+//confirmar si se puede usar serviceWorker
+if( navigator.serviceWorker ){
+    console.log('podemos usarlo');
+    navigator.serviceWorker.register('../sw.js')
 
+}
 
-var thola = 'ahora si queda';
-
-
-window.onload =
-    function(){
-        return console.log(thola);
-    };
-
-
-let nombre = 'carlos';
